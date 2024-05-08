@@ -1,3 +1,5 @@
+let lastSize = 16
+
 function drawSquare(value)
 {
     const container = document.querySelector(".container");
@@ -6,12 +8,16 @@ function drawSquare(value)
     let size = 500/value;
     square.style.height = size + "px";
     square.style.width = size + "px";
+    square.style.backgroundColor = "#000000";
+    square.style.opacity = "0";
+
 
     for(let i = 0; i < (value * value); i++)
     {
         const tmp_square = square.cloneNode(true);
         tmp_square.addEventListener("mouseover", function(e) {
-            e.target.style.background = "black";
+            let newOpacity = +e.target.style.opacity + .1
+            e.target.style.opacity = newOpacity;
         });
         container.appendChild(tmp_square);
     }
@@ -26,8 +32,14 @@ function pickSize()
     }
     while(isNaN(selection) || selection > 100 || selection < 1);
 
+    lastSize = selection;
     drawSquare(selection);
 }
 
-drawSquare(16)
+function reDraw()
+{
+    drawSquare(lastSize);
+}
+
+drawSquare(lastSize)
 
